@@ -11,8 +11,8 @@ struct Nodo {
 };
 
 // Punteros globales
-Nodo* head = NULL;
-Nodo* tail = NULL;
+Nodo* head = nullptr;
+Nodo* tail = nullptr;
 
 // Buscar por ID para validar repetidos
 Nodo* buscarPorId(int id) {
@@ -22,13 +22,13 @@ Nodo* buscarPorId(int id) {
             return aux;
         aux = aux->sig;
     }
-    return NULL;
+    return nullptr;
 }
 
 void insertarInicio(int id, string nombre, float peso) {
     if (buscarPorId(id)) return;
 
-    Nodo* nuevo = new Nodo{id, nombre, peso, NULL, NULL};
+    Nodo* nuevo = new Nodo{id, nombre, peso, nullptr, nullptr};
 
     if (!head) {
         head = tail = nuevo;
@@ -42,7 +42,7 @@ void insertarInicio(int id, string nombre, float peso) {
 void insertarFinal(int id, string nombre, float peso) {
     if (buscarPorId(id)) return;
 
-    Nodo* nuevo = new Nodo{id, nombre, peso, NULL, NULL};
+    Nodo* nuevo = new Nodo{id, nombre, peso, nullptr, nullptr};
 
     if (!tail) {
         head = tail = nuevo;
@@ -123,6 +123,38 @@ void liberarLista() {
         delete aux;
     }
     tail = nullptr;
+}
+
+void insertarOrdenado(int id, string nombre, float peso) {
+    if (buscarPorId(id)) return;
+
+    Nodo* nuevo = new Nodo{id, nombre, peso, nullptr, nullptr};
+
+    if (!head) {
+        head = tail = nuevo;
+        return;
+    }
+
+    if (id < head->id) {
+        nuevo->sig = head;
+        head->ant = nuevo;
+        head = nuevo;
+        return;
+    }
+
+    Nodo* aux = head;
+    while (aux->sig && aux->sig->id < id)
+        aux = aux->sig;
+
+    nuevo->sig = aux->sig;
+    nuevo->ant = aux;
+
+    if (aux->sig)
+        aux->sig->ant = nuevo;
+    else
+        tail = nuevo;
+
+    aux->sig = nuevo;
 }
 
 
