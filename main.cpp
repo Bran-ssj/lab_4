@@ -76,6 +76,54 @@ void mostrarAtras() {
         aux = aux->ant;
     }
 }
+void mostrarPaquetePorId(int id) {
+    Nodo* p = buscarPorId(id);
+    if (!p) {
+        cout << "Paquete no encontrado\n";
+        return;
+    }
+    cout << p->id << " " << p->nombre << " " << p->peso << "kg\n";
+}
+
+bool eliminarPorId(int id) {
+    Nodo* p = buscarPorId(id);
+    if (!p) return false;
+
+    if (p == head && p == tail) {
+        head = tail = nullptr;
+    } else if (p == head) {
+        head = head->sig;
+        head->ant = nullptr;
+    } else if (p == tail) {
+        tail = tail->ant;
+        tail->sig = nullptr;
+    } else {
+        p->ant->sig = p->sig;
+        p->sig->ant = p->ant;
+    }
+
+    delete p;
+    return true;
+}
+
+int contarPaquetes() {
+    int c = 0;
+    Nodo* aux = head;
+    while (aux) {
+        c++;
+        aux = aux->sig;
+    }
+    return c;
+}
+
+void liberarLista() {
+    while (head) {
+        Nodo* aux = head;
+        head = head->sig;
+        delete aux;
+    }
+    tail = nullptr;
+}
 
 
 int main() {
