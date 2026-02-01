@@ -53,6 +53,31 @@ void insertarFinal(int id, string nombre, float peso) {
     }
 }
 
+void mostrarAdelante() {
+    if (!head) {
+        cout << "Lista vacia\n";
+        return;
+    }
+    Nodo* aux = head;
+    while (aux) {
+        cout << aux->id << " " << aux->nombre << " " << aux->peso << "kg\n";
+        aux = aux->sig;
+    }
+}
+
+void mostrarAtras() {
+    if (!tail) {
+        cout << "Lista vacia\n";
+        return;
+    }
+    Nodo* aux = tail;
+    while (aux) {
+        cout << aux->id << " " << aux->nombre << " " << aux->peso << "kg\n";
+        aux = aux->ant;
+    }
+}
+
+
 int main() {
     return 0;
 }
